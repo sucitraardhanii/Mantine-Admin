@@ -1,106 +1,68 @@
 "use client";
 
 import {
-  Container,
-  Paper,
-  SimpleGrid,
-  Space,
-  Text,
-  ThemeIcon,
-  Title,
-} from "@mantine/core";
-import {
-  IconBrandMantine,
-  IconBrandNextjs,
-  IconBrandOauth,
-  IconBrandPlanetscale,
-  IconBrandReact,
+	IconGitBranch,
+	IconTestPipe,
+	IconServer,
+	IconCode,
 } from "@tabler/icons-react";
 import classes from "./FeatureSection.module.css";
 
-export const featuresData = [
-  {
-    icon: IconBrandNextjs,
-    title: "Next.js",
-    description: "App dir, Routing, Layouts, Loading UI and API routes.",
-  },
-  {
-    icon: IconBrandReact,
-    title: "React 18",
-    description: "Server and Client Components. Use hook.",
-  },
-  {
-    icon: IconBrandPlanetscale,
-    title: "Database",
-    description: "ORM using Prisma and deployed on PlanetScale.",
-  },
-  {
-    icon: IconBrandMantine,
-    title: "Components",
-    description: "UI components built using Mantine UI.",
-  },
-  {
-    icon: IconBrandOauth,
-    title: "Authentication",
-    description: "Authentication using NextAuth.js and middlewares.",
-  },
-];
-
-interface FeatureProps {
-  icon: React.FC<any>;
-  title: React.ReactNode;
-  description: React.ReactNode;
+interface FeatureCardProps {
+	icon: React.ReactNode;
+	title: string;
+	description: string;
 }
 
-export function Feature({ icon: Icon, title, description }: FeatureProps) {
-  return (
-    <Paper h="100%" shadow="md" px="lg" py="sm" radius="md" withBorder>
-      <ThemeIcon variant="light" size={60} radius={60}>
-        <Icon size="2rem" stroke={1.5} />
-      </ThemeIcon>
-      <Text mt="sm" mb={7} fw="600">
-        {title}
-      </Text>
-      <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
-        {description}
-      </Text>
-    </Paper>
-  );
-}
+const FeatureCard = ({ icon, title, description }: FeatureCardProps) => (
+	<div className={classes.feature}>
+		<div className={classes.featureIcon}>{icon}</div>
+		<h3 className={classes.featureTitle}>{title}</h3>
+		<p className={classes.featureDescription}>{description}</p>
+	</div>
+);
 
-interface FeaturesGridProps {
-  title: React.ReactNode;
-  description: React.ReactNode;
-  data?: FeatureProps[];
-}
+export function Features() {
+	const features = [
+		{
+			icon: <IconGitBranch className="h-5 w-5" />,
+			title: "Modern Git Workflow",
+			description:
+				"Built-in support for GitHub Flow with automated branch protection, code review workflows, and merge queue management.",
+		},
+		{
+			icon: <IconTestPipe className="h-5 w-5" />,
+			title: "Integrated Testing",
+			description:
+				"Automated testing pipeline with Jest and Playwright. Includes UI component testing, API integration tests, and end-to-end testing.",
+		},
+		{
+			icon: <IconServer className="h-5 w-5" />,
+			title: "Full-Stack Type Safety",
+			description:
+				"End-to-end type safety with TypeScript and tRPC. Automatic type inference from database to frontend with Prisma and Zod validation.",
+		},
+		{
+			icon: <IconCode className="h-5 w-5" />,
+			title: "Developer Experience",
+			description:
+				"Pre-configured ESLint, Prettier, and TypeScript. Hot reload, error overlay, and automatic import organization for rapid development.",
+		},
+	];
 
-export function FeaturesSection({
-  title,
-  description,
-  data = featuresData,
-}: FeaturesGridProps) {
-  const features = data.map((feature, index) => (
-    <Feature {...feature} key={index} />
-  ));
+	return (
+		<section className={classes.wrapper}>
+			<h2 className={classes.title}>Built for Modern Development</h2>
+			<p className={classes.description}>
+				Enterprise-grade development workflow with built-in best practices and
+				tools
+			</p>
 
-  return (
-    <Container className={classes.wrapper}>
-      <Title className={classes.title}>{title}</Title>
-      <Space h="md" />
-
-      <Container size={560} p={0}>
-        <Text size="sm" className={classes.description}>
-          {description}
-        </Text>
-      </Container>
-
-      <SimpleGrid
-        mt={60}
-        cols={{ base: 1, sm: 2, lg: 3 }}
-        spacing={{ base: "lg", md: "lg", lg: "xl" }}
-      >
-        {features}
-      </SimpleGrid>
-    </Container>
-  );
+			<div className={classes.grid}>
+				{features.map((feature, index) => (
+					<FeatureCard key={index} {...feature} />
+				))}
+			</div>
+		</section>
+	);
 }
